@@ -13,7 +13,7 @@ To use in your flask app:
 ```
 from ktsessions import KyotoTycoonSessionInterface
 ...
- app.session_interface = KyotoTycoonSessionInterface('127.0.0.1', 1978)
+app.session_interface = KyotoTycoonSessionInterface('127.0.0.1', 1978)
 ```
 
 make sure Kyoto Tycoon is running somewhere.
