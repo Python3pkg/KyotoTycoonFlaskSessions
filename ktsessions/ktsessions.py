@@ -23,7 +23,7 @@ class KyotoTycoonSessionInterface(SessionInterface):
         sid = request.cookies.get(app.session_cookie_name)
         if sid:
             self.connection.open(self.host, self.port)
-            stored_session = self.connection.get(sid)
+            stored_session = self.connection.get(sid, db=app.name)
             self.connection.close()
 
             if stored_session:
