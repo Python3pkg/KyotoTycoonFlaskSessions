@@ -6,6 +6,8 @@ Flask sessions stored in Kyoto Tycoon
 To install:
 ```
 python setup.py install
+# or from pypi:
+pip install kt-flask-sessions
 ```
 
 

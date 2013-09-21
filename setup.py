@@ -3,9 +3,9 @@ from setuptools import setup
 setup(
     author='Quinlan Pfiffer',
     author_email='qpfiffer@gmail.com',
-    name='kyoto_tycoon_flask_session',
-    description='Kyoto Tycoon Session Interface for Flask',
-    version='0.0.1',
+    name='kt-flask-sessions',
+    description='Kyoto Tycoon backed sessions for Flask',
+    version='0.1.0',
     license='BSD',
     keywords='Kyoto Tycoon, Flask',
     packages=['ktsessions'],
