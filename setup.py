@@ -6,7 +6,7 @@ setup(
     url='https://github.com/qpfiffer/KyotoTycoonFlaskSessions',
     name='kt-flask-sessions',
     description='Kyoto Tycoon backed sessions for Flask',
-    version='0.1.0',
+    version='0.1.1',
     license='BSD',
     keywords='Kyoto Tycoon, Flask',
     packages=['ktsessions'],

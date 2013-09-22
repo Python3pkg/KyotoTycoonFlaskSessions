@@ -15,6 +15,7 @@ class KyotoTycoonSession(CallbackDict, SessionMixin):
 class KyotoTycoonSessionInterface(SessionInterface):
     def __init__(self, host=KT_DEFAULT_HOST, port=KT_DEFAULT_PORT):
         connection = KyotoTycoon()
+        connection.open(host, port)
         self.connection = connection
         self.host = host
         self.port = port
@@ -22,9 +23,7 @@ class KyotoTycoonSessionInterface(SessionInterface):
     def open_session(self, app, request):
         sid = request.cookies.get(app.session_cookie_name)
         if sid:
-            self.connection.open(self.host, self.port)
             stored_session = self.connection.get(sid, db=app.name)
-            self.connection.close()
 
             if stored_session:
                 return KyotoTycoonSession(initial=stored_session['data'],
@@ -48,7 +47,6 @@ class KyotoTycoonSessionInterface(SessionInterface):
             # something KyotoTycoon expects
             expiration = int(app.config["PERMANENT_SESSION_LIFETIME"].total_seconds())
 
-        self.connection.open(self.host, self.port)
         self.connection.set(session.sid,
             { "sid": session.sid
             , "data": session
@@ -56,7 +54,6 @@ class KyotoTycoonSessionInterface(SessionInterface):
             expiration,
             db=app.name
         )
-        self.connection.close()
         response.set_cookie(app.session_cookie_name, session.sid,
             expires=self.get_expiration_time(app, session),
             httponly=True, domain=domain)
