@@ -1,6 +1,7 @@
 from flask.sessions import SessionInterface, SessionMixin
 from kyototycoon import KyotoTycoon, KT_DEFAULT_PORT, KT_DEFAULT_HOST
 from werkzeug.datastructures import CallbackDict
+from httplib import BadStatusLine
 
 from datetime import datetime
 from uuid import uuid4
@@ -23,7 +24,14 @@ class KyotoTycoonSessionInterface(SessionInterface):
     def open_session(self, app, request):
         sid = request.cookies.get(app.session_cookie_name)
         if sid:
-            stored_session = self.connection.get(sid, db=app.name)
+            stored_session = None
+            try:
+                stored_session = self.connection.get(sid, db=app.name)
+            except BadStatusLine:
+                connection = KyotoTycoon()
+                connection.open(self.host, self.port)
+                self.connection = connection
+                stored_session = self.connection.get(sid, db=app.name)
 
             if stored_session:
                 return KyotoTycoonSession(initial=stored_session['data'],
