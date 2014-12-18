@@ -1,10 +1,16 @@
 from flask.sessions import SessionInterface, SessionMixin
-from kyototycoon import KyotoTycoon, KT_DEFAULT_PORT, KT_DEFAULT_HOST
+from kyototycoon import KyotoTycoon
 from werkzeug.datastructures import CallbackDict
-from httplib import BadStatusLine
+try:
+    from httplib import BadStatusLine
+except ImportError:
+    from http.client import BadStatusLine
 
 from datetime import datetime
 from uuid import uuid4
+
+KT_DEFAULT_PORT = "1978"
+KT_DEFAULT_HOST = "127.0.0.1"
 
 
 class KyotoTycoonSession(CallbackDict, SessionMixin):
@@ -36,7 +42,7 @@ class KyotoTycoonSessionInterface(SessionInterface):
             if stored_session:
                 return KyotoTycoonSession(initial=stored_session['data'],
                     sid=stored_session['sid'])
-        sid = unicode(uuid4())
+        sid = str(uuid4())
         return KyotoTycoonSession(sid=sid)
 
     def save_session(self, app, session, response):
