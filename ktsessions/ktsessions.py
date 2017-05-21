@@ -2,7 +2,7 @@ from flask.sessions import SessionInterface, SessionMixin
 from kyototycoon import KyotoTycoon
 from werkzeug.datastructures import CallbackDict
 try:
-    from httplib import BadStatusLine
+    from http.client import BadStatusLine
 except ImportError:
     from http.client import BadStatusLine
 
